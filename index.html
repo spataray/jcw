@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Johnny Castaway - Web Homage</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="scene-container">
+        <!-- Sky and Environment -->
+        <div id="sky">
+            <div id="sun-moon"></div>
+            <div class="cloud" style="top: 10%; left: -100px;"></div>
+            <div class="cloud" style="top: 25%; left: -200px; animation-delay: 10s;"></div>
+        </div>
+
+        <!-- Ocean and Water -->
+        <div id="ocean">
+            <div class="wave" style="bottom: 15%; animation-delay: 0s;"></div>
+            <div class="wave" style="bottom: 10%; animation-delay: 2s;"></div>
+        </div>
+
+        <!-- The Island -->
+        <div id="island">
+            <div id="palm-tree">
+                <div class="trunk"></div>
+                <div class="leaves">
+                    <div class="leaf leaf-1"></div>
+                    <div class="leaf leaf-2"></div>
+                    <div class="leaf leaf-3"></div>
+                </div>
+            </div>
+            
+            <!-- Johnny -->
+            <div id="johnny" class="idle">
+                <div class="body"></div>
+                <div class="head"></div>
+                <div class="arms"></div>
+                <div class="legs"></div>
+                <div id="thought-bubble"></div>
+            </div>
+
+            <!-- Island Sandbox/Prop area -->
+            <div id="props"></div>
+        </div>
+    </div>
+
+    <!-- Audio Elements (Optional) -->
+    <audio id="audio-ocean" loop>
+        <source src="https://www.soundjay.com/nature/ocean-wave-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Version Tag -->
+    <div id="version-tag">v1.0.0 (2026-03-25 17:28 HST)</div>
+
+    <!-- Click to Start Overlay -->
+    <div id="start-overlay">
+        <div class="start-content">
+            <h1>Johnny Castaway</h1>
+            <p>Click anywhere to start screensaver</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
