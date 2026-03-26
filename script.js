@@ -9,7 +9,7 @@
     // --- State Variables ---
     let currentState = 'IDLE';
     let lastStateChange = Date.now();
-    const states = ['IDLE', 'SLEEPING', 'EXERCISING', 'DREAMING'];
+    const states = ['IDLE', 'SLEEPING', 'EXERCISING', 'DREAMING', 'FISHING'];
     
     // --- DOM Elements ---
     const johnny = document.getElementById('johnny');
@@ -86,7 +86,9 @@
                 break;
             case 'EXERCISING':
                 johnny.classList.add('exercising');
-                // Mini-logic: jumping jacks animation or simple scale
+                break;
+            case 'FISHING':
+                johnny.classList.add('fishing');
                 break;
             case 'DREAMING':
                 johnny.classList.add('idle');

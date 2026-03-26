@@ -1,258 +1,196 @@
 :root {
-  --sky-day: #87CEEB;
-  --sky-sunset: #FF7F50;
-  --sky-night: #191970;
+  --sky-day: linear-gradient(to bottom, #4facfe 0%, #00f2fe 100%);
+  --sky-sunset: linear-gradient(to bottom, #ff0844 0%, #ffb199 100%);
+  --sky-night: linear-gradient(to bottom, #09203f 0%, #537895 100%);
   --ocean-day: #0077be;
-  --ocean-night: #004477;
-  --sand: #F4D03F;
+  --ocean-mid: #005a9c;
+  --ocean-deep: #003366;
+  --sand: radial-gradient(circle, #f4d03f 0%, #d4ac0d 100%);
   --trunk: #8B4513;
   --leaf: #228B22;
   --johnny-skin: #FFDAB9;
   --johnny-shorts: #FF0000;
+  --johnny-hair: #4B2C20;
 }
 
 body, html {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  font-family: 'Courier New', monospace;
+  margin: 0; padding: 0; width: 100%; height: 100%;
+  overflow: hidden; font-family: 'Courier New', monospace;
   background-color: #000;
 }
 
 #scene-container {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  transition: background-color 2s ease;
-}
-
-/* --- SKY & ENVIRONMENT --- */
-#sky {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 70%;
-  background: var(--sky-day);
-  transition: background 2s ease;
-}
-
-#sun-moon {
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: #FFFACD;
-  top: 10%;
-  left: 10%;
-  box-shadow: 0 0 20px #FFFACD;
+  position: relative; width: 100vw; height: 100vh;
   transition: all 2s ease;
 }
 
+/* --- SKY & CLOUDS --- */
+#sky {
+  position: absolute; top: 0; width: 100%; height: 75%;
+  background: var(--sky-day); transition: background 2s ease;
+}
+
+#sun-moon {
+  position: absolute; width: 60px; height: 60px; border-radius: 50%;
+  background: #fff9c4; top: 10%; left: 15%;
+  box-shadow: 0 0 40px rgba(255, 249, 196, 0.8);
+  transition: all 3s ease-in-out;
+}
+
 .cloud {
-  position: absolute;
-  width: 120px;
-  height: 40px;
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 20px;
-  animation: drift 60s linear infinite;
+  position: absolute; width: 150px; height: 50px;
+  background: white; border-radius: 50px; opacity: 0.9;
+  filter: blur(5px); animation: drift linear infinite;
 }
+.cloud::after, .cloud::before {
+  content: ""; position: absolute; background: white; border-radius: 50%;
+}
+.cloud::after { width: 70px; height: 70px; top: -35px; left: 20px; }
+.cloud::before { width: 50px; height: 50px; top: -20px; left: 70px; }
 
-/* --- OCEAN & WAVES --- */
+/* --- OCEAN & PARALLAX --- */
 #ocean {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 35%;
-  background: var(--ocean-day);
-  transition: background 2s ease;
+  position: absolute; bottom: 0; width: 100%; height: 35%;
+  background: var(--ocean-deep); overflow: hidden;
 }
 
-.wave {
-  position: absolute;
-  width: 200%;
-  height: 40px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  animation: ebb 4s ease-in-out infinite alternate;
+.ocean-layer {
+  position: absolute; width: 200%; height: 100%;
+  background-repeat: repeat-x;
+}
+
+.bg-waves {
+  background: linear-gradient(transparent 10%, rgba(255,255,255,0.1) 15%, transparent 20%);
+  animation: wave-bg 12s linear infinite;
+  opacity: 0.3;
+}
+
+.mid-waves {
+  background: linear-gradient(transparent 30%, rgba(255,255,255,0.2) 35%, transparent 40%);
+  animation: wave-mid 8s linear infinite;
+  opacity: 0.5;
+}
+
+.fg-waves {
+  background: linear-gradient(transparent 50%, rgba(255,255,255,0.3) 55%, transparent 60%);
+  animation: wave-fg 5s linear infinite;
 }
 
 /* --- THE ISLAND --- */
 #island {
-  position: absolute;
-  bottom: 10%;
-  left: 50%;
+  position: absolute; bottom: 15%; left: 50%;
   transform: translateX(-50%);
-  width: 300px;
-  height: 120px;
+  width: 350px; height: 80px;
   background: var(--sand);
-  border-radius: 150px 150px 50px 50px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  z-index: 5;
-}
-
-/* Palm Tree */
-#palm-tree {
-  position: absolute;
-  bottom: 60px;
-  right: 50px;
-}
-
-.trunk {
-  width: 15px;
-  height: 120px;
-  background: var(--trunk);
-  border-radius: 5px;
-  transform: rotate(-10deg);
-}
-
-.leaves {
-  position: absolute;
-  top: -20px;
-  left: -40px;
-}
-
-.leaf {
-  position: absolute;
-  width: 100px;
-  height: 30px;
-  background: var(--leaf);
-  border-radius: 50% 50% 0 0;
-  transform-origin: left center;
-}
-
-.leaf-1 { transform: rotate(0deg); }
-.leaf-2 { transform: rotate(120deg); }
-.leaf-3 { transform: rotate(240deg); }
-
-/* --- JOHNNY --- */
-#johnny {
-  position: absolute;
-  bottom: 40px;
-  left: 100px;
-  width: 40px;
-  height: 60px;
-  transition: all 1s ease;
-}
-
-#johnny .head {
-  width: 15px;
-  height: 15px;
-  background: var(--johnny-skin);
-  border-radius: 50%;
-  position: absolute;
-  top: 0; left: 12.5px;
-}
-
-#johnny .body {
-  width: 20px;
-  height: 25px;
-  background: var(--johnny-skin);
-  position: absolute;
-  top: 15px; left: 10px;
-  border-radius: 5px;
-  border-bottom: 5px solid var(--johnny-shorts);
-}
-
-#johnny .legs {
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  top: 40px; left: 10px;
-}
-
-#johnny .legs::before, #johnny .legs::after {
-  content: "";
-  position: absolute;
-  width: 6px; height: 15px;
-  background: var(--johnny-skin);
-}
-
-#johnny .legs::before { left: 2px; }
-#johnny .legs::after { right: 2px; }
-
-/* Johnny Animations */
-#johnny.idle { animation: breathe 3s ease-in-out infinite; }
-#johnny.sleeping { transform: rotate(90deg) translate(20px, 30px); }
-#johnny.exercising { animation: jumping-jacks 0.5s ease-in-out infinite; }
-
-/* Thought Bubble */
-#thought-bubble {
-  position: absolute;
-  top: -40px;
-  left: 20px;
-  background: white;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  font-size: 20px;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+  border-radius: 50% 50% 20% 20% / 100% 100% 0% 0%;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
   z-index: 10;
 }
 
-#thought-bubble::before {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: -5px;
-  width: 10px;
-  height: 10px;
-  background: white;
-  border-radius: 50%;
+.shoreline {
+  position: absolute; bottom: -5px; left: -10px; width: 370px; height: 20px;
+  background: rgba(255,255,255,0.2); border-radius: 50%;
+  filter: blur(3px); animation: shore-ripple 4s ease-in-out infinite;
 }
 
-/* --- OVERLAYS & UI --- */
-#start-overlay {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.8);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  z-index: 100;
-  cursor: pointer;
-  text-align: center;
+/* Palm Tree */
+#palm-tree { position: absolute; bottom: 40px; right: 60px; }
+.trunk {
+  width: 12px; height: 140px; background: var(--trunk);
+  border-radius: 6px; transform: rotate(-8deg);
+  background: linear-gradient(to right, #6d3a0f, #8b4513);
 }
 
-#version-tag {
-  position: fixed;
-  bottom: 5px;
-  right: 5px;
-  font-size: 10px;
-  color: rgba(255,255,255,0.3);
-  z-index: 1000;
+.leaves { position: absolute; top: -10px; left: -50px; }
+.leaf {
+  position: absolute; width: 110px; height: 25px;
+  background: var(--leaf); border-radius: 80% 0 80% 0;
+  transform-origin: left center; animation: sway 4s ease-in-out infinite;
+}
+.f1 { transform: rotate(0deg); animation-delay: 0s; }
+.f2 { transform: rotate(72deg); animation-delay: 0.5s; }
+.f3 { transform: rotate(144deg); animation-delay: 1s; }
+.f4 { transform: rotate(216deg); animation-delay: 1.5s; }
+.f5 { transform: rotate(288deg); animation-delay: 2s; }
+
+/* --- JOHNNY REDUX --- */
+#johnny {
+  position: absolute; bottom: 35px; left: 80px;
+  width: 35px; height: 75px; z-index: 20;
+}
+
+#johnny .head {
+  width: 18px; height: 18px; background: var(--johnny-skin);
+  border-radius: 50%; position: absolute; top: 0; left: 8px;
+}
+#johnny .hair {
+  width: 20px; height: 10px; background: var(--johnny-hair);
+  border-radius: 10px 10px 0 0; position: absolute; top: -2px; left: 7px;
+}
+#johnny .body {
+  width: 22px; height: 30px; background: var(--johnny-skin);
+  position: absolute; top: 18px; left: 6px;
+  border-radius: 4px; border-bottom: 8px solid var(--johnny-shorts);
+}
+#johnny .arm-l, #johnny .arm-r {
+  width: 6px; height: 25px; background: var(--johnny-skin);
+  position: absolute; top: 20px; border-radius: 3px;
+}
+.arm-l { left: -2px; transform: rotate(10deg); }
+.arm-r { right: -2px; transform: rotate(-10deg); }
+
+#johnny .leg-l, #johnny .leg-r {
+  width: 7px; height: 25px; background: var(--johnny-skin);
+  position: absolute; top: 48px; border-radius: 3px;
+}
+.leg-l { left: 8px; }
+.leg-r { right: 8px; }
+
+/* Johnny Animations */
+#johnny.idle { animation: breathe 4s ease-in-out infinite; }
+#johnny.fishing .arm-r { transform: rotate(-110deg); top: 15px; }
+#johnny.fishing #fishing-pole { display: block; }
+#johnny.sleeping { transform: rotate(90deg) translate(30px, 40px); }
+
+#fishing-pole {
+  display: none; position: absolute; width: 120px; height: 3px;
+  background: #555; top: 0px; right: -110px; transform: rotate(-20deg);
+  transform-origin: left center;
+}
+#fishing-pole .line {
+  position: absolute; width: 1px; height: 150px; background: rgba(255,255,255,0.4);
+  right: 0; top: 0; transform: rotate(20deg); transform-origin: top center;
+}
+
+/* Thought Bubble */
+#thought-bubble {
+  position: absolute; top: -50px; left: 25px;
+  background: white; border-radius: 50%;
+  width: 40px; height: 40px; display: none;
+  justify-content: center; align-items: center;
+  font-size: 24px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
 }
 
 /* --- ANIMATIONS --- */
-@keyframes drift {
-  from { left: -200px; }
-  to { left: 120vw; }
-}
-
-@keyframes ebb {
-  from { transform: translateX(-10px); }
-  to { transform: translateX(10px); }
-}
-
-@keyframes breathe {
-  0%, 100% { transform: scaleY(1); }
-  50% { transform: scaleY(1.05); }
-}
-
-@keyframes jumping-jacks {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1, 0.9) translateY(-5px); }
-}
+@keyframes drift { from { left: -200px; } to { left: 110vw; } }
+@keyframes wave-bg { from { background-position: 0 0; } to { background-position: 400px 0; } }
+@keyframes wave-mid { from { background-position: 0 0; } to { background-position: -600px 0; } }
+@keyframes wave-fg { from { background-position: 0 0; } to { background-position: 800px 0; } }
+@keyframes shore-ripple { 0%, 100% { transform: scale(1); opacity: 0.2; } 50% { transform: scale(1.05); opacity: 0.4; } }
+@keyframes sway { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(5deg); } }
+@keyframes breathe { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
 
 /* Environment States */
 .night #sky { background: var(--sky-night); }
-.night #ocean { background: var(--ocean-night); }
-.night #sun-moon { background: #EEE; box-shadow: 0 0 30px #EEE; left: 80%; }
-
+.night #sun-moon { background: #fffde7; left: 80%; box-shadow: 0 0 60px rgba(255,255,255,0.4); }
+.night .cloud { opacity: 0.3; }
 .sunset #sky { background: var(--sky-sunset); }
+
+/* Start Overlay */
+#start-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: #000; color: #fff; z-index: 100;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: pointer; text-align: center;
+}
+#version-tag { position: fixed; bottom: 5px; right: 5px; font-size: 10px; color: rgba(255,255,255,0.2); }

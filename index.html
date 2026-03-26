@@ -11,33 +11,50 @@
         <!-- Sky and Environment -->
         <div id="sky">
             <div id="sun-moon"></div>
-            <div class="cloud" style="top: 10%; left: -100px;"></div>
-            <div class="cloud" style="top: 25%; left: -200px; animation-delay: 10s;"></div>
+            <div class="cloud-layer">
+                <div class="cloud c1" style="top: 15%; animation-duration: 80s;"></div>
+                <div class="cloud c2" style="top: 10%; animation-duration: 120s; animation-delay: -40s;"></div>
+                <div class="cloud c3" style="top: 25%; animation-duration: 100s; animation-delay: -20s;"></div>
+            </div>
         </div>
 
-        <!-- Ocean and Water -->
+        <!-- Ocean with Parallax Layers -->
         <div id="ocean">
-            <div class="wave" style="bottom: 15%; animation-delay: 0s;"></div>
-            <div class="wave" style="bottom: 10%; animation-delay: 2s;"></div>
+            <div class="ocean-layer bg-waves"></div>
+            <div class="ocean-layer mid-waves"></div>
+            <div class="ocean-layer fg-waves"></div>
         </div>
 
         <!-- The Island -->
         <div id="island">
+            <div class="shoreline"></div>
             <div id="palm-tree">
                 <div class="trunk"></div>
                 <div class="leaves">
-                    <div class="leaf leaf-1"></div>
-                    <div class="leaf leaf-2"></div>
-                    <div class="leaf leaf-3"></div>
+                    <div class="leaf f1"></div>
+                    <div class="leaf f2"></div>
+                    <div class="leaf f3"></div>
+                    <div class="leaf f4"></div>
+                    <div class="leaf f5"></div>
                 </div>
             </div>
             
             <!-- Johnny -->
             <div id="johnny" class="idle">
-                <div class="body"></div>
+                <div class="hair"></div>
                 <div class="head"></div>
-                <div class="arms"></div>
-                <div class="legs"></div>
+                <div class="body"></div>
+                <div class="arms">
+                    <div class="arm-l"></div>
+                    <div class="arm-r"></div>
+                    <div id="fishing-pole">
+                        <div class="line"></div>
+                    </div>
+                </div>
+                <div class="legs">
+                    <div class="leg-l"></div>
+                    <div class="leg-r"></div>
+                </div>
                 <div id="thought-bubble"></div>
             </div>
 
